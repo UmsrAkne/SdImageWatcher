@@ -1,11 +1,12 @@
-﻿using Prism.Ioc;
+﻿using System.Windows;
+using Prism.Ioc;
+using SdImageWatcher.ViewModels;
 using SdImageWatcher.Views;
-using System.Windows;
 
 namespace SdImageWatcher
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    ///     Interaction logic for App.xaml
     /// </summary>
     public partial class App
     {
@@ -16,6 +17,7 @@ namespace SdImageWatcher
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterDialog<DirectoryRegistrationPage, DirectoryRegistrationPageViewModel>();
         }
     }
 }

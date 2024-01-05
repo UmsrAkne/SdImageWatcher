@@ -20,8 +20,16 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <!--  画像ファイルを表示する  -->
-        <Image Grid.Row="0" />
+        <DockPanel Grid.Row="0">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="機能">
+                    <MenuItem Command="{Binding ShowDirectoryRegistrationDialogCommand}" Header="ディレクトリの登録" />
+                </MenuItem>
+            </Menu>
+
+            <!--  画像ファイルを表示する  -->
+            <Image DockPanel.Dock="Bottom" />
+        </DockPanel>
 
         <StackPanel Grid.Row="1">
 
