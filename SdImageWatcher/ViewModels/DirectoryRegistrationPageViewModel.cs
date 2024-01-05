@@ -1,4 +1,7 @@
 using System;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows.Controls;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
@@ -17,6 +20,21 @@ namespace SdImageWatcher.ViewModels
         public string Title => string.Empty;
 
         public string DirectoryPath { get => directoryPath; set => SetProperty(ref directoryPath, value); }
+
+        public ObservableCollection<ExFileInfo> Directories { get; set; }
+
+        public DelegateCommand<TextBox> DirectoryRegistrationCommand => new ((textBox) =>
+        {
+            var d = new ExFileInfo(new DirectoryInfo(DirectoryPath));
+            if (!d.IsDirectory)
+            {
+                return;
+            }
+
+            databaseContext.WatchingDirectoryPaths.Add(d);
+            databaseContext.SaveChanges();
+            textBox.Text = string.Empty;
+        });
 
         public DelegateCommand CloseCommand => new (() =>
         {

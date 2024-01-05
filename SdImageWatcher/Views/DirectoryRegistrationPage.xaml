@@ -22,17 +22,21 @@
 
         <StackPanel Grid.Row="1">
             <TextBlock Margin="0,3" Text="パスを入力 : " />
-            <TextBox Text="test" />
+            <TextBox x:Name="TextBox" Text="{Binding DirectoryPath, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
 
         <StackPanel
             Grid.Row="2"
             HorizontalAlignment="Right"
             Orientation="Horizontal">
+
             <Button
                 Width="100"
                 Margin="5,0"
+                Command="{Binding DirectoryRegistrationCommand}"
+                CommandParameter="{Binding ElementName=TextBox}"
                 Content="登録" />
+
             <Button
                 Width="80"
                 Margin="5,0"
