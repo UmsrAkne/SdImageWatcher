@@ -1,4 +1,5 @@
 ﻿using Prism.Mvvm;
+using SdImageWatcher.Models;
 
 namespace SdImageWatcher.ViewModels
 {
@@ -6,6 +7,12 @@ namespace SdImageWatcher.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         private string title = "Prism Application";
+
+        public MainWindowViewModel()
+        {
+            using var db = new DatabaseContext();
+            db.Database.EnsureCreated();
+        }
 
         public string Title { get => title; set => SetProperty(ref title, value); }
     }
