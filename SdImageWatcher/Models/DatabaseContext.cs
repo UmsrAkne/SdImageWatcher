@@ -1,5 +1,6 @@
 using System.Data.SQLite;
 using System.IO;
+using System.Linq;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,21 @@ namespace SdImageWatcher.Models
         private const string DbFileName = "db.sqlite";
 
         public DbSet<ExFileInfo> WatchingDirectoryPaths { get; set; }
+
+        public DbSet<ExFileInfo> Files { get; set; }
+
+        /// <summary>
+        ///     指定した ExFileInfo をデータベースに登録します。
+        ///     ただし、既存のアイテムと FullName が重複している場合は追加されません。
+        /// </summary>
+        /// <param name="fileInfo">Files に登録する fileInfo</param>
+        public void Add(ExFileInfo fileInfo)
+        {
+            if (!Files.Any(f => f.FullName == fileInfo.FullName))
+            {
+                Files.Add(fileInfo);
+            }
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
