@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:io="clr-namespace:System.IO;assembly=System.Runtime"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:SdImageWatcher.Models"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewModels="clr-namespace:SdImageWatcher.ViewModels"
     Title="{Binding Title}"
@@ -31,10 +32,10 @@
             <Image DockPanel.Dock="Bottom" />
         </DockPanel>
 
-        <StackPanel Grid.Row="1">
+        <DockPanel Grid.Row="1">
 
             <!--  タブを表示するリストボックス  -->
-            <ListBox>
+            <ListBox DockPanel.Dock="Top">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal" />
@@ -43,16 +44,19 @@
             </ListBox>
 
             <!--  ファイル一覧を表示するリストビュー  -->
-            <ListView HorizontalContentAlignment="Stretch">
+            <ListView
+                HorizontalContentAlignment="Stretch"
+                ItemsSource="{Binding Files}"
+                ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListView.ItemTemplate>
-                    <DataTemplate DataType="{x:Type io:FileInfo}">
+                    <DataTemplate DataType="{x:Type models:ExFileInfo}">
                         <Grid>
-                            <TextBlock Text="test" />
+                            <TextBlock Text="{Binding Name}" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </StackPanel>
+        </DockPanel>
     </Grid>
 
 </Window>
