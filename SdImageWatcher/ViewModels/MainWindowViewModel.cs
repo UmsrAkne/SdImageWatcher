@@ -32,7 +32,14 @@ namespace SdImageWatcher.ViewModels
                     .Select(p => new ExFileInfo(new FileInfo(p))));
             }
 
-            Files = new ObservableCollection<ExFileInfo>(infos);
+            foreach (var info in infos)
+            {
+                databaseContext.Add(info);
+            }
+
+            databaseContext.SaveChanges();
+
+            Files = new ObservableCollection<ExFileInfo>(databaseContext.Files);
             RaisePropertyChanged(nameof(Files));
         }
 

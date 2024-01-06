@@ -26,6 +26,7 @@ namespace SdImageWatcher.Models
         public string Name { get; set; } = string.Empty;
 
         [Required]
+        [Index(IsUnique = true)]
         public string FullName { get; set; } = string.Empty;
 
         [NotMapped]
