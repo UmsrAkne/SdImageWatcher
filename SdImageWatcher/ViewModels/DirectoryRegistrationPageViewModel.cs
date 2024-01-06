@@ -15,7 +15,7 @@ namespace SdImageWatcher.ViewModels
     {
         private DatabaseContext databaseContext;
         private string directoryPath = string.Empty;
-        private ObservableCollection<ExFileInfo> directories;
+        private ObservableCollection<ExDirectoryInfo> directories;
 
         public event Action<IDialogResult> RequestClose;
 
@@ -23,7 +23,7 @@ namespace SdImageWatcher.ViewModels
 
         public string DirectoryPath { get => directoryPath; set => SetProperty(ref directoryPath, value); }
 
-        public ObservableCollection<ExFileInfo> Directories
+        public ObservableCollection<ExDirectoryInfo> Directories
         {
             get => directories;
             private set => SetProperty(ref directories, value);
@@ -31,13 +31,13 @@ namespace SdImageWatcher.ViewModels
 
         public DelegateCommand<TextBox> DirectoryRegistrationCommand => new ((textBox) =>
         {
-            var d = new ExFileInfo(new DirectoryInfo(DirectoryPath));
-            if (!d.IsDirectory)
+            var d = new ExDirectoryInfo(DirectoryPath);
+            if (!Directory.Exists(DirectoryPath))
             {
                 return;
             }
 
-            databaseContext.WatchingDirectoryPaths.Add(d);
+            databaseContext.WatchingDirectories.Add(d);
             databaseContext.SaveChanges();
             Directories.Add(d);
             textBox.Text = string.Empty;
@@ -60,7 +60,7 @@ namespace SdImageWatcher.ViewModels
         public void OnDialogOpened(IDialogParameters parameters)
         {
             databaseContext = parameters.GetValue<DatabaseContext>(nameof(DatabaseContext));
-            Directories = new ObservableCollection<ExFileInfo>(databaseContext.WatchingDirectoryPaths.ToList());
+            Directories = new ObservableCollection<ExDirectoryInfo>(databaseContext.WatchingDirectories.ToList());
         }
     }
 }

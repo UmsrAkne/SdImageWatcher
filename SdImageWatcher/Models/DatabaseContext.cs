@@ -10,7 +10,7 @@ namespace SdImageWatcher.Models
     {
         private const string DbFileName = "db.sqlite";
 
-        public DbSet<ExFileInfo> WatchingDirectoryPaths { get; set; }
+        public DbSet<ExDirectoryInfo> WatchingDirectories { get; set; }
 
         public DbSet<ExFileInfo> Files { get; set; }
 

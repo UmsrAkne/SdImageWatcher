@@ -24,7 +24,7 @@ namespace SdImageWatcher.ViewModels
             databaseContext = new DatabaseContext();
             databaseContext.Database.EnsureCreated();
 
-            var watchingDirectories = databaseContext.WatchingDirectoryPaths.ToList();
+            var watchingDirectories = databaseContext.WatchingDirectories.ToList();
             var infos = new List<ExFileInfo>();
             foreach (var exFileInfo in watchingDirectories)
             {
