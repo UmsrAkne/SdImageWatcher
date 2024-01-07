@@ -23,7 +23,35 @@ namespace SdImageWatcher.ViewModels
             this.dialogService = dialogService;
             databaseContext = new DatabaseContext();
             databaseContext.Database.EnsureCreated();
+            ReloadFileList();
+        }
 
+        public string Title { get => title; set => SetProperty(ref title, value); }
+
+        public ObservableCollection<ExFileInfo> Files { get; set; }
+
+        public DelegateCommand ShowDirectoryRegistrationDialogCommand => new (() =>
+        {
+            var param = new DialogParameters { { nameof(DatabaseContext), databaseContext }, };
+            dialogService.ShowDialog(nameof(DirectoryRegistrationPage), param, _ =>
+            {
+                ReloadFileList();
+            });
+        });
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            databaseContext.Dispose();
+        }
+
+        private void ReloadFileList()
+        {
             var watchingDirectories = databaseContext.WatchingDirectories.ToList();
             var infos = new List<ExFileInfo>();
             foreach (var exFileInfo in watchingDirectories)
@@ -41,29 +69,6 @@ namespace SdImageWatcher.ViewModels
 
             Files = new ObservableCollection<ExFileInfo>(databaseContext.Files);
             RaisePropertyChanged(nameof(Files));
-        }
-
-        public string Title { get => title; set => SetProperty(ref title, value); }
-
-        public ObservableCollection<ExFileInfo> Files { get; set; }
-
-        public DelegateCommand ShowDirectoryRegistrationDialogCommand => new (() =>
-        {
-            var param = new DialogParameters { { nameof(DatabaseContext), databaseContext }, };
-            dialogService.ShowDialog(nameof(DirectoryRegistrationPage), param, _ =>
-            {
-            });
-        });
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            databaseContext.Dispose();
         }
     }
 }
