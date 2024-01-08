@@ -57,6 +57,7 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="120" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
@@ -69,7 +70,18 @@
                                 <TextBlock Text="{Binding Index, Converter={StaticResource NumberFormatConverter}}" />
                             </Border>
 
-                            <TextBlock Grid.Column="1" Text="{Binding Name}" />
+                            <Border
+                                Grid.Column="1"
+                                Margin="2,0"
+                                BorderBrush="Black"
+                                BorderThickness="0,0,1,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding ParentDirectoryName}" />
+                                    <TextBlock Text="/" />
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Grid.Column="2" Text="{Binding Name}" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
