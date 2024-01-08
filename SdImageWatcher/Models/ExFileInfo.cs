@@ -34,5 +34,8 @@ namespace SdImageWatcher.Models
 
         [NotMapped]
         public FileSystemInfo FileSystemInfo { get; private set; }
+
+        [NotMapped]
+        public int Index { get; set; }
     }
 }
