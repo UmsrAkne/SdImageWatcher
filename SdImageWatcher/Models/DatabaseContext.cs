@@ -16,11 +16,17 @@ namespace SdImageWatcher.Models
 
         /// <summary>
         ///     指定した ExFileInfo をデータベースに登録します。
-        ///     ただし、既存のアイテムと FullName が重複している場合は追加されません。
+        ///     ただし、既存のアイテムと FullName が重複している場合や、ファイル名やフルパスが空文字の場合は追加されません。
         /// </summary>
         /// <param name="fileInfo">Files に登録する fileInfo</param>
         public void Add(ExFileInfo fileInfo)
         {
+            if (string.IsNullOrWhiteSpace(fileInfo.Name) || string.IsNullOrWhiteSpace(fileInfo.FullName))
+            {
+                // ファイル名やパスが入っていない場合、DB に記録する必要が無い。
+                return;
+            }
+
             if (!Files.Any(f => f.FullName == fileInfo.FullName))
             {
                 Files.Add(fileInfo);
