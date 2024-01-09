@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -12,6 +13,7 @@ namespace SdImageWatcher.Models
             Name = f.Name;
             FullName = f.FullName;
             IsDirectory = new DirectoryInfo(f.FullName).Exists;
+            CreationTime = f.CreationTime;
         }
 
         public ExFileInfo()
@@ -28,6 +30,9 @@ namespace SdImageWatcher.Models
         [Required]
         [Index(IsUnique = true)]
         public string FullName { get; set; } = string.Empty;
+
+        [Required]
+        public DateTime CreationTime { get; set; }
 
         [NotMapped]
         public bool IsDirectory { get; set; }
