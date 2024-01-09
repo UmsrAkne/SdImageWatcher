@@ -2,6 +2,7 @@
     x:Class="SdImageWatcher.Views.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:MyLibrary.Converters;assembly=MyLibrary"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:io="clr-namespace:System.IO;assembly=System.Runtime"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -14,6 +15,9 @@
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
+    <Window.Resources>
+        <converters:NumberFormatConverter x:Key="NumberFormatConverter" Format="D5" />
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -51,7 +55,33 @@
                 <ListView.ItemTemplate>
                     <DataTemplate DataType="{x:Type models:ExFileInfo}">
                         <Grid>
-                            <TextBlock Text="{Binding Name}" />
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Border
+                                Grid.Column="0"
+                                Margin="2,0"
+                                BorderBrush="Black"
+                                BorderThickness="0,0,1,0">
+
+                                <TextBlock Text="{Binding Index, Converter={StaticResource NumberFormatConverter}}" />
+                            </Border>
+
+                            <Border
+                                Grid.Column="1"
+                                Margin="2,0"
+                                BorderBrush="Black"
+                                BorderThickness="0,0,1,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding ParentDirectoryName}" />
+                                    <TextBlock Text="/" />
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Grid.Column="2" Text="{Binding Name}" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
