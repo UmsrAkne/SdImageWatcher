@@ -34,6 +34,15 @@ namespace SdImageWatcher.Models
         [Required]
         public DateTime CreationTime { get; set; }
 
+        [Required]
+        public bool IsChecked { get; set; }
+
+        [Required]
+        public bool Favorite { get; set; }
+
+        [Required]
+        public int Rating { get; set; }
+
         [NotMapped]
         public bool IsDirectory { get; set; }
 
