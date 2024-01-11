@@ -10,8 +10,10 @@ namespace SdImageWatcher.Models
     {
         private const string DbFileName = "db.sqlite";
 
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global EF を使用するため get,set の両方が必要
         public DbSet<ExDirectoryInfo> WatchingDirectories { get; set; }
 
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global EF を使用するため get,set の両方が必要
         public DbSet<ExFileInfo> Files { get; set; }
 
         /// <summary>
