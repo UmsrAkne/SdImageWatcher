@@ -3,9 +3,9 @@ using System.IO;
 
 namespace SdImageWatcher.Models
 {
-    public class FileUtils
+    public static class FileUtils
     {
-        public static List<string> GetAllFilePaths(string directoryPath)
+        public static IEnumerable<string> GetAllFilePaths(string directoryPath)
         {
             var filePaths = new List<string>();
 
